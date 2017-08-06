@@ -1,0 +1,19 @@
+{
+  "name": "donazon",
+  "version": "1.0.0",
+  "description": "A fictional version of Amazon using MySQL and JS",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/obidon23/donazon.git"
+  },
+  "author": "Don Guckenberger",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/obidon23/donazon/issues"
+  },
+  "homepage": "https://github.com/obidon23/donazon#readme"
+}
