@@ -63,10 +63,6 @@ Inquirer.prompt([
 		// Let's double-check the inventory to see if we can fill the order
 			checkInventory(answer);
 
-		// Let's reduce our inventory by the quantity they ordered
-			// adjustInventory();
-		// And finally, present our customer with the bill
-			// createBill();
 	})
 
 }
@@ -85,11 +81,14 @@ function checkInventory(answer) {
 
 		function (err, res) {
 			var newQuantity = res[0].stock_quantity;
+			var product = res[0].item_id;
 			if (answer.quantity <= newQuantity) {
-				console.log("We have enough inventory to fill your order");				
-				adjustInventory(answer, newQuantity);
+				console.log("We have enough inventory to fill your order");
+				newQuantity = res[0].stock_quantity - answer.quantity;
+
+				adjustInventory(answer, newQuantity, res[0].price);
 			} else {
-				console.log("Sorry, we only have " + newQuantity + " items in stock.")
+				console.log("Sorry, we only have " + res[0].stock_quantity + " items in stock.")
 				loadProducts();
 			}
 
@@ -97,12 +96,14 @@ function checkInventory(answer) {
 		);	
 }
 
-function adjustInventory(answer, newQuantity) {
+function adjustInventory(answer, newQuantity, price) {
 	console.log(answer);
+	console.log(newQuantity);
+
 	var query = connection.query(
 
 		//pull the current table for products with selected columns (product id, product nam and product price)
-		"UPDATE * from products SET ?WHERE ?", 
+		"UPDATE products SET ? WHERE ?", 
 
 		[
 			{
@@ -115,13 +116,20 @@ function adjustInventory(answer, newQuantity) {
 		],
 
 		function (err, res) {
-			if (answer.quantity <= res[0].stock_quantity) {
-				createBill(answer);
-			}	else {
-
-			}
-
+			if (err) {
+				console.log(err);
+				return;
+			}	
+				createBill(answer, price);
 		}
 		);	
 }
+
+function createBill(answer, price) {
+	console.log("You ordered " + answer.quantity + " items.")
+	console.log("Let's add up your bill!");
+	var total = price * answer.quantity;
+	console.log("You owe us $" + total+ "! Pay up!" );
+}
+
 loadProducts();
