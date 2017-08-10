@@ -6,6 +6,9 @@ Launch donazonCustomer.js and you'll get a list of the items we have for sale. N
 
 Get your credit card ready, though, because once you start making orders, you won't be able to stop!
 
+HOW IT WORKS
+
+![Alt text](/images/initial-product-load.png "Optional Title")
 
 --------------------------------------------------
 HOW TO USE DONAZON's MANAGER APP
